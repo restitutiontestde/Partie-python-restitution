@@ -54,9 +54,6 @@ class LoadJob:
                     for drug in tit_contains:
                         dict_journal_drugs[journal].append(drug)
         
-        # for jr, drugs in dict_journal_drugs.items():
-        #     print(jr, drugs)
-            
         dict_journal_nbr_distinct = {
             journal : len(set(dict_journal_drugs[journal]))
             for journal in dict_journal_drugs

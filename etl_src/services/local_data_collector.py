@@ -47,7 +47,6 @@ def collect_json_data_local() -> pd.DataFrame:
     """
     file_name = etl_config.files_input_data_config.pubmed_json
     path_json_pubmed = JSON_DATA_DIR / file_name
-    #print("path_json : ", path_json_pubmed)
     with open(path_json_pubmed, "r") as json_file:
         json_data = json_file.read()
     
@@ -87,15 +86,12 @@ def get_dataframes_per_dir(
         Tuple[pd.DataFrame]: _description_
     """
     list_files = dir.glob('**/*')
-    # print([elm for elm in list_files])
     pubmed_csv_df = pd.DataFrame()
     pubmed_json_df = pd.DataFrame()
     clinical_trials_df = pd.DataFrame()
     for file_name in list_files:
         name = str(file_name)
-        print("name : ", name)
         if "clinical" in str(name):
-            print("hell")
             clinical_trials_df =  pd.read_csv(
                 name,
                 sep=";"
