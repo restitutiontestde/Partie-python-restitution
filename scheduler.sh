@@ -1,2 +1,0 @@
-export AIRFLOW_HOME=~/PycharmProjects/Restitution_python_test_de/airflow
-airflow scheduler
