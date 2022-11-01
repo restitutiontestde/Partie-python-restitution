@@ -37,11 +37,13 @@ class LoadJob:
         with open(
             RESULTS_DIR / etl_config.files_input_data_config.final_results,
             "w",
+            encoding="UTF-8"
         ) as write_json_file:
             json.dump(
                 self.all_data_as_dict,
                 write_json_file,
-                indent=4
+                indent=4,
+                ensure_ascii=False
             )  
  
     def extract_journal_with_most_distinct_drugs(self) -> None:
@@ -72,12 +74,14 @@ class LoadJob:
         # serialize results of journal with max diff drugs
         with open(
             RESULTS_DIR / etl_config.files_input_data_config.resutls_jounral_max_diff_drugs,
-            "w"
+            "w",
+            encoding="UTF-8"
         ) as write_json_file:
             json.dump(
                 self.journal_max_diff_drugs_dict,
                 write_json_file,
-                indent=4
+                indent=4,
+                ensure_ascii=False
             )
     def run_worker(self) -> None:
         """_summary_
