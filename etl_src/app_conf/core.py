@@ -5,18 +5,28 @@ from strictyaml import YAML, load
 from pydantic import BaseModel
 
 
-
 ROOT = Path(__file__).resolve().parent.parent.parent
+# chemin vers le répertoire contenant les scripts 
+# de l'ETL (classes, modules, objets et congigs)
 ETL_SRC = ROOT / "etl_src"
-CONFIG_DIR = ROOT / "config"
+# chemin le dossier contenant le fichier config du projet (ETL)
+CONFIG_DIR = ETL_SRC / "config"
+# chemin vers le fichier config du projet
 PATH_CONFIG_FILE = CONFIG_DIR / "dev.yml"
+# chemin vers le répértoire qui contient les dossiers
+# qui tracent la vie des données au cours de l'ETL
 DATASET_DIR = ETL_SRC / "datasets"
-NAN_DATA = DATASET_DIR / "Nan_data"
+# état des données à etape 1 du cycle de vie ETL (Raw data)
 RAW_DATA = DATASET_DIR / "Raw_data"
-CLEAN_DATA = DATASET_DIR / "Clean_data"
-METIER_DATA =  DATASET_DIR / "Metier_data"
 CSV_DATA_DIR = RAW_DATA / "csv_data"
 JSON_DATA_DIR = RAW_DATA / "json_data"
+# état des données à etape 2 du cycle de vie ETL (les nan values)
+NAN_DATA = DATASET_DIR / "Nan_data"
+# état des données à etape 3 du cycle de vie ETL (après nétoyage)
+CLEAN_DATA = DATASET_DIR / "Clean_data"
+# état des données à etape 3 du cycle de vie ETL (exploitable par le métier)
+METIER_DATA =  DATASET_DIR / "Metier_data"
+# Résultat de l'ETL (json format)
 RESULTS_DIR = ETL_SRC / "results"
 
     

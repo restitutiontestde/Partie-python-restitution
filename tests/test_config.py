@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """Test config core functions. """
-from etl_src.configs.core import create_and_validate_etl_config
+from etl_src.app_conf.core import create_and_validate_etl_config
 
 def test_parse_config_from_yml_file(sample_parsed_config):
     """_summary_

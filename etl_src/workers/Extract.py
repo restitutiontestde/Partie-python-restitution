@@ -3,7 +3,7 @@
 from typing import Tuple
 import pandas as pd
 from etl_src.services import local_data_collector, data_quality
-from etl_src.configs.core import etl_config, NAN_DATA, CLEAN_DATA
+from etl_src.app_conf.core import etl_config, NAN_DATA, CLEAN_DATA
 from etl_src.utils import utils
 
 

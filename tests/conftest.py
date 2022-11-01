@@ -2,7 +2,7 @@
 """Define fixtures for static data used by tests. """
 import pytest
 from etl_src.services import local_data_collector
-from etl_src.configs import core 
+from etl_src.app_conf import core 
 
 
 @pytest.fixture()

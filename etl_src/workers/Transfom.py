@@ -1,7 +1,7 @@
 # coding=utf-8
 """ Transform step (second step) of the ETL. """
 import pandas as pd
-from etl_src.configs.core import etl_config, METIER_DATA, CLEAN_DATA
+from etl_src.app_conf.core import etl_config, METIER_DATA, CLEAN_DATA
 from etl_src.utils import utils
 from etl_src.services import local_data_collector, mapper_data, data_quality
 

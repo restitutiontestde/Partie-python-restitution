@@ -1,7 +1,7 @@
 # coding=utf-8
 """ Load class of the ETL. """
 import json
-from etl_src.configs.core import etl_config, RESULTS_DIR
+from etl_src.app_conf.core import etl_config, RESULTS_DIR
 from etl_src.services import local_data_collector
 
 class LoadJob:

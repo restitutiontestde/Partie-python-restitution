@@ -4,7 +4,7 @@ from typing import List, Tuple
 import pandas as pd
 import numpy as np
 from etl_src.utils import utils
-from etl_src.configs.core import etl_config
+from etl_src.app_conf.core import etl_config
 from itertools import chain
 
 

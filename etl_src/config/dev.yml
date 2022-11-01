@@ -1,0 +1,29 @@
+# Data files names and their paths
+clinical_trials_csv: clinical_trials.csv
+drugs_csv: drugs.csv
+pubmed_csv: pubmed.csv
+pubmed_json: pubmed.json
+all_data: pubmed_and_clinical_trials.csv
+final_results: final_results.json
+resutls_jounral_max_diff_drugs: journal_with_max_diff_drugs.json
+
+# vriables for renaming 
+variables_to_rename:
+  scientific_title: title
+
+# variables to add
+variable_to_add: type
+
+# toutes les varibales 
+all_varibales:
+  - id
+  - title
+  - date
+  - journal
+  
+# busninss varibales (important for busniss goal)
+variables_busniss:
+  - id
+  - title
+  - date
+  - journal

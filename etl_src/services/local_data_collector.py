@@ -3,8 +3,8 @@
 from typing import Tuple
 import os
 from pathlib import Path
-from etl_src.configs.core import CSV_DATA_DIR, JSON_DATA_DIR, METIER_DATA
-from etl_src.configs.core import etl_config
+from etl_src.app_conf.core import CSV_DATA_DIR, JSON_DATA_DIR, METIER_DATA
+from etl_src.app_conf.core import etl_config
 from etl_src.utils import utils
 from etl_src.services import data_quality
 import pandas as pd 

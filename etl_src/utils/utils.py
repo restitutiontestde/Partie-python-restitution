@@ -8,7 +8,7 @@ import re
 import json
 import pandas as pd 
 import numpy as np
-from etl_src.configs.core import etl_config, NAN_DATA
+from etl_src.app_conf.core import etl_config, NAN_DATA
 
 
 
