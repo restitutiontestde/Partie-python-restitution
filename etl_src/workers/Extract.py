@@ -10,15 +10,19 @@ from etl_src.utils import utils
 class ExtratJob:
     """Class of Extraction JOB. """
     def __init__(self) -> None:
-        """_summary_
-        """
+        """Initaliser le job Extract. """
         self.clinical_trials_df, self.drungs, self.pubmed_csv_df = \
             local_data_collector.collect_csv_data_local()
         self.pubmed_json_df = local_data_collector.collect_json_data_local()
 
     def highlight_missing_data(self) -> None:
-        """_summary_
-        """
+        """ Mettre en évidence les valeurs manquantes des datasets. 
+        pour chaque variable qui contient des valeurs manquantes, 
+        on ajoute un indicateur de NAN, qui reporte 1 
+        quand il y a une valeur manquante et 0 sinon. 
+        
+        Enfin, on enregistre ces données dans le NAN_DATA, 
+        pour permetre au métier par exemple d'estimer les nans values."""
         # treat nan values
         self.clinical_trials_df = data_quality.nan_treatement_data(
             data_frame=self.clinical_trials_df

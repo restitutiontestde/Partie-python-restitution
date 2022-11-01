@@ -9,11 +9,7 @@ from etl_src.services import local_data_collector, mapper_data, data_quality
 class TransformJob:
     """Class Transform Job"""
     def __init__(self) -> None:
-        """_summary_
-
-        Args:
-
-        """
+        """Initialiser le job Transform. """
         self.clean_pubmed_csv, self.clean_pubmed_json, self.clean_clinical_trials\
         = local_data_collector.get_dataframes_per_dir(
             dir=CLEAN_DATA
@@ -27,15 +23,18 @@ class TransformJob:
      
     
     def rename_col_title_clinical_tirals_df(self) -> None:
-        """_summary_
-        """
+        """Renommer la colonne title du dataset clinical_trials.
+        De cette manière on peut concaténer les deux datasetets 
+        pour faciliter les statistiques analyses. """
         self.clean_clinical_trials = mapper_data.rename_col_for_data_frame(
             data_frame=self.clean_clinical_trials
         )
     
     def add_type_column(self) -> None:
-        """_summary_
-        """
+        """Pour chaque dataset on ajoute la colonne type,
+        Si on concatène les deux datasets, cette colonne nous 
+        permettra de specifier si c'est le papier est
+        un artcile ou essaie clinique. """
         self.clean_clinical_trials[
             etl_config.model_data_config.variable_to_add
         ] = 'clinical_trial'
@@ -45,8 +44,8 @@ class TransformJob:
         ] = "article"
     
     def clean_text_data(self) -> None:
-        """_summary_
-        """
+        """Nettoyer les textes de chaque dataset
+            suppression des stopword et ponctuations. """
         self.all_data, self.clean_clinical_trials = data_quality.clean_texte_data_all_data_frames(
             pubmed_df=self.all_pub_med,
             trials_clinical_df=self.clean_clinical_trials,
@@ -54,8 +53,7 @@ class TransformJob:
         )
     
     def match_drug_with_articles(self):
-        """_summary_
-        """
+        """Extraction des matching des médicament avec les articles. """
         self.all_pub_med, self.clean_clinical_trials = mapper_data.match_drug_per_dataframes(
             pubmed_df=self.all_pub_med,
             clinical_trials_df=self.clean_clinical_trials,
@@ -63,8 +61,10 @@ class TransformJob:
         )
     
     def treate_list_values_drugs(self):
-        """_summary_
-        """
+        """Le dataset resultant des matching reporte une liste 
+        de médicaments par artcile. Pour aboutir à un dataset 
+        exploitable et lisible, nous devons dupliquer les lignes 
+        pour chaque liste. """
         self.all_pub_med, self.clean_clinical_trials = mapper_data.duplicate_rows_drugs_for_dataframes(
             pubmed_df=self.all_pub_med,
             trial_clinical_df=self.clean_clinical_trials,
@@ -73,8 +73,7 @@ class TransformJob:
         self.all_data = pd.concat([self.all_pub_med, self.clean_clinical_trials])
         
     def seralize_data_for_field_experts(self):
-        """_summary_
-        """
+        """Enregistrement des données pour l'exploitation du métier. """
         utils.serialize_dataframe_as_csv(
             data_frame=self.all_pub_med,
             pth_file=METIER_DATA / etl_config.files_input_data_config.pubmed_csv.replace(".csv", "_all.csv")

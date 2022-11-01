@@ -1,4 +1,7 @@
-# coding=utf-8
+# -*- coding: utf-8 -*-
+
+"""App configuration (typing + config parser)."""
+
 from pathlib import Path
 from typing import Dict, List
 from strictyaml import YAML, load
@@ -31,10 +34,12 @@ RESULTS_DIR = ETL_SRC / "results"
 
     
 class FilesInputDataConfig(BaseModel):
-    """_summary_
+    """classe représentant les configs liées aux
+     fichiers données d'entrée.
 
     Args:
-        BaseModel (_type_): _description_
+        BaseModel (_type_): hérite de la base BaseModel
+                             de pydantic
     """
     clinical_trials_csv: str
     drugs_csv: str
@@ -44,20 +49,23 @@ class FilesInputDataConfig(BaseModel):
     final_results: str
     resutls_jounral_max_diff_drugs: str
 
+
 class ModelDataConfig(BaseModel):
-    """_summary_
+    """class des configurations liées
+    aux meta-données des nos tables.
 
     Args:
-        BaseModel (_type_): _description_
+        BaseModel (_type_): hérite de la base BaseModel
+                             de pydantic
     """
     variables_to_rename: Dict
     all_varibales: List[str]
     variables_busniss: List[str]
     variable_to_add: str
 
-class EtlConfig(BaseModel):
-    """_summary_
 
+class EtlConfig(BaseModel):
+    """Master class des toutes les configurations
     ETL configution typing
     """
     
@@ -65,10 +73,12 @@ class EtlConfig(BaseModel):
     model_data_config: ModelDataConfig
 
 def get_config_file() -> Path:
-    """_summary_
+    """fonction qui vérifie sir le config file existe.
+    La localisation du config file est définie comme constante.
 
     Returns:
-        Path: _description_
+        PATH_CONFIG_FILE: constante de type Path, emplacement du fichier config
+            ou une exception liée au path_config
     """
     if PATH_CONFIG_FILE.is_file():
         return PATH_CONFIG_FILE
@@ -78,6 +88,20 @@ def get_config_file() -> Path:
 def parse_config_from_yml_file(
     conig_path: Path=None
 ) -> YAML:
+    """ lire le fichier config et le parser via le package strictyaml.
+
+
+    Args:
+        conig_path (Path, optional): en args ou depuis 
+        la fonction get_config_file. 
+        Defaults to None.
+
+    Raises:
+        OSError: si aucun fichier config n'existe on aura un OSERROR
+
+    Returns:
+        YAML: le yaml au format parsé pour réccupérer les données.
+    """    
     if not conig_path:
         conig_path = get_config_file()
     
@@ -92,13 +116,15 @@ def parse_config_from_yml_file(
 def create_and_validate_etl_config(
     parsed_config: YAML=None
 ) -> EtlConfig:
-    """_summary_
+    """retourne un objet de class EtlConfig, 
+        qui contient toutes les configurations du projet.
 
     Args:
-        parsed_config (YAML, optional): _description_. Defaults to None.
+        parsed_config (YAML, optional): le YAML après parsing du fihcier.
+        Defaults to None.
 
     Returns:
-        EtlConfig: _description_
+        _etl_config : de tyoe EtlConfig, toutes les configuration de l'ETL
     """
     
     if parsed_config is None:
@@ -110,6 +136,6 @@ def create_and_validate_etl_config(
     )
     return _etl_config
 
-
+# get etl_config
 etl_config = create_and_validate_etl_config()
 
