@@ -80,4 +80,25 @@ La restituion du journal qui mentionne le plus de médicaments différents
 est enregistrée dans : 
 Restitution_python_test_de\etl_src\results\journal_with_max_diff_drugs.json
 
+#### Question 6 : Aller plus loin
+Pour répondre à cette question je pose deux hypothèses de départ :
+
+- Hypothèse 1 : le traitement requis pour ce projet est un traitement dit « en batch » , le cas streaming n’est pas pris en considération dans cette réponse.
+
+- Hypothèse 2 : la proposition cloud de la réponse prendra en considération les services du cloud GCP et non pas un autre cloud provider (AZURE, AWS ou IBM).
+
+ 
+
+Pour faire évoluer le projet (code restitué) vers une perspective Big data nous devons considérer deux modifications majeures à savoir :
+
+1. Stockage des donnés : Dans un contexte Big data on doit choisir un format de stckage adapté à cette quantité. AVRO ; utilisant json pour les méta-datas (schéma et data types) et une sérialisation au format binaire pour enregistrer les données.
+- En onpremise : Les modifications à apporter au script sont comme suit : la classe Extract (contenue dans le directory Workers) devra faire appel un service missionné pour lire/manipuler les fichier de type AVRO. De ce fait dans le répertoire Services du code on ajoute un module dédié aux fonctions qui manipulent le format AVRO.
+  De cette manière l’orchestration Airflow ne sera pas touché car elle fait appel à la fonction de la classe Extract (après instanciation).
+
+- En cloud GCP : les fichier AVRO peuvent être déposés sur le storage GCS, et on poura utiliser soit un trigger via pubSub ou bien un operator Sensor d’Airflow pour enlencher le process extract du pipeline.
+ 
+
+2. Traitement des données :
+- En onpremise : un traitement distribué basé sur l’architecture de SPARK (via python, sql ou scala) est recommandé pour les données de grande dimension. De plus Airflow dispose du SparkSubmitOperator pour orchestrer le pipeline big data.
+- En cloud GCP : Pour traiter les données de grandes dimension GCP recommande deux services DATAPROC et DATAFLOW. Suivant la documentation de GCP, DATAPROC est plus en adéquation avec des projets de migration depuis spark vers DATAPROC. Cependant, si on part from scratch il est recommandé d’utiliser les pipelines du service DATAFLOW. Airflow ou Cloud Composer (sur GCP) dispose des operators (provision ou run) des deux services DATAPROC et AIRFLOW. 
 
